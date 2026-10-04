@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff5c8a">
+<title>A Little Question for Ayoti 💗</title>
+<style>
+  :root { --pink:#ff5c8a; --deep:#d6336c; --cream:#fff5f8; --ink:#54223a; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+    color:var(--ink); background:linear-gradient(135deg,#fff0f5,#ffe0eb,#fff7fa);
+    display:grid; place-items:center; overflow:hidden;
+  }
+  .hearts { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+  .heart { position:absolute; bottom:-60px; animation:floatUp linear infinite; opacity:.5; }
+  @keyframes floatUp { from { transform:translateY(0) rotate(0deg); opacity:0; } 10% {opacity:.55;} to {transform:translateY(-115vh) rotate(25deg);opacity:0;} }
+  .card {
+    position:relative; z-index:1; width:min(92vw,520px); padding:clamp(24px,6vw,42px);
+    text-align:center; background:rgba(255,255,255,.88); border:1px solid #ffd0df;
+    border-radius:28px; box-shadow:0 20px 60px #c63a6b20; backdrop-filter:blur(8px);
+  }
+  .screen { display:none; animation:appear .45s ease both; }
+  .screen.active { display:block; }
+  @keyframes appear { from {opacity:0;transform:translateY(10px) scale(.98)} to {opacity:1;transform:translateY(0) scale(1)} }
+  .eyebrow { font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color:#d34a78; font-weight:800; }
+  h1 { font-size:clamp(2rem,8vw,3rem); line-height:1.12; margin:14px 0; color:#b51e59; }
+  p { font-size:1.05rem; line-height:1.6; }
+  .emoji { font-size:3rem; margin:8px 0; }
+  .buttons { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px; margin-top:26px; }
+  button {
+    border:0; border-radius:999px; padding:13px 24px; font-size:1rem; font-weight:800;
+    cursor:pointer; transition:transform .2s, font-size .2s, padding .2s; min-height:48px;
+  }
+  button:focus-visible, input:focus-visible { outline:3px solid #8b2d58; outline-offset:3px; }
+  .yes,.primary { color:white; background:linear-gradient(135deg,#ff6a9a,#e52f70); box-shadow:0 8px 18px #e52f7030; }
+  .no,.secondary { background:#fff0f5; color:#b51e59; border:1px solid #ffc2d5; }
+  .small-note { font-size:.85rem; opacity:.75; margin-top:18px; }
+  .love-message { font-size:clamp(2rem,7vw,2.8rem); }
+  .field { text-align:left; margin:18px 0; }
+  label { display:block; font-weight:800; margin-bottom:8px; }
+  input { width:100%; padding:13px 14px; border:1px solid #f2abc3; border-radius:13px; background:#fffafd; color:var(--ink); font:inherit; }
+  .final-hearts { font-size:clamp(1.7rem,6vw,2.6rem); line-height:1.7; overflow-wrap:anywhere; }
+  .tiny { font-size:.88rem; opacity:.8; }
+  @media (prefers-reduced-motion:reduce) { *,*::before,*::after {animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important;scroll-behavior:auto!important;} }
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+<main class="card">
+  <section class="screen active" id="screen1">
+    <div class="eyebrow">A tiny question 💌</div>
+    <div class="emoji">🌷💗🌷</div>
+    <h1>Wanna go on a date?</h1>
+    <p>I have a little question for you, Ayoti… 😊</p>
+    <div class="buttons">
+      <button class="yes" id="firstYes">Yes 💖</button>
+      <button class="no" id="noBtn">No 🙈</button>
+    </div>
+    <p class="small-note" id="hint">Choose whichever answer feels right. 💕</p>
+  </section>
+
+  <section class="screen" id="screen2">
+    <div class="emoji">💘🌹💘</div>
+    <h1 class="love-message">I really like you, Ayoti!</h1>
+    <p>You make ordinary moments feel a little more magical. 💗</p>
+    <div class="final-hearts" aria-hidden="true">💖 💕 💗 💓 💞</div>
+    <p class="tiny">A little more love coming your way…</p>
+  </section>
+
+  <section class="screen" id="screen3">
+    <div class="eyebrow">One more thing…</div>
+    <div class="emoji">🥹💞</div>
+    <h1>Do you like me?</h1>
+    <p>Be honest… my heart is listening. 💓</p>
+    <div class="buttons">
+      <button class="yes" id="likeYes">Yes 💗</button>
+      <button class="primary" id="definitelyYes">Definitely Yes! 💘</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen4">
+    <div class="emoji">🗓️🌸</div>
+    <h1>Let's plan our date!</h1>
+    <p>Pick a date and time that works for you. 💕</p>
+    <form id="dateForm">
+      <div class="field">
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" required>
+      </div>
+      <div class="field">
+        <label for="time">Time</label>
+        <input id="time" name="time" type="time" required>
+      </div>
+      <div class="field">
+        <label for="place">Where should we go? (optional)</label>
+        <input id="place" name="place" type="text" placeholder="A café, a walk, somewhere cute…">
+      </div>
+      <button class="primary" type="submit">Submit our plan 💌</button>
+    </form>
+    <p class="tiny">This demo keeps your selection on this page only; it doesn't send a message.</p>
+  </section>
+
+  <section class="screen" id="screen5">
+    <div class="eyebrow">It's a date! 💌</div>
+    <div class="emoji">🥰💋🤗</div>
+    <h1>Yay! Can't wait! 💖</h1>
+    <p id="dateSummary">Sending you a big virtual hug!</p>
+    <div class="final-hearts" aria-label="Hearts, kisses and hugs">💗 💖 💕 💞 💓<br>😘 💋 🤗 🫂 😘<br>💝 💘 ❤️‍🔥 💝</div>
+    <p>One big hug, a thousand hearts, and a little kiss for you! 💋🫂</p>
+    <button class="secondary" id="restart">Start again ↻</button>
+  </section>
+</main>
+<script>
+  const screens = [...document.querySelectorAll('.screen')];
+  function showScreen(number) {
+    screens.forEach((screen, i) => screen.classList.toggle('active', i === number - 1));
+  }
+
+  // Floating heart decorations
+  const heartLayer = document.getElementById('hearts');
+  const heartTypes = ['💗','💖','💕','💞','💘','❤️'];
+  for (let i = 0; i < 24; i++) {
+    const heart = document.createElement('span');
+    heart.className = 'heart';
+    heart.textContent = heartTypes[i % heartTypes.length];
+    heart.style.left = (Math.random() * 100) + '%';
+    heart.style.fontSize = (16 + Math.random() * 24) + 'px';
+    heart.style.animationDuration = (8 + Math.random() * 10) + 's';
+    heart.style.animationDelay = (-Math.random() * 16) + 's';
+    heartLayer.appendChild(heart);
+  }
+
+  const yesButton = document.getElementById('firstYes');
+  const noButton = document.getElementById('noBtn');
+  const hint = document.getElementById('hint');
+  let yesScale = 1;
+  yesButton.addEventListener('click', () => {
+    showScreen(2);
+    window.setTimeout(() => showScreen(3), 3000);
+  });
+  noButton.addEventListener('click', () => {
+    yesScale = Math.min(yesScale + 0.35, 3.2);
+    yesButton.style.fontSize = (16 * yesScale) + 'px';
+    yesButton.style.padding = (13 * yesScale) + 'px ' + (24 * yesScale) + 'px';
+    hint.textContent = 'Are you sure? The Yes button is getting bigger! 💗';
+  });
+
+  function acceptLike() { showScreen(4); }
+  document.getElementById('likeYes').addEventListener('click', acceptLike);
+  document.getElementById('definitelyYes').addEventListener('click', acceptLike);
+
+  // Avoid allowing a date in the past, using the device's local date.
+  const dateInput = document.getElementById('date');
+  const now = new Date();
+  const localToday = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0,10);
+  dateInput.min = localToday;
+
+  document.getElementById('dateForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!dateInput.value || !document.getElementById('time').value) return;
+    const chosenDate = new Date(dateInput.value + 'T00:00:00');
+    const formattedDate = chosenDate.toLocaleDateString(undefined, {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+    const formattedTime = new Date('2000-01-01T' + document.getElementById('time').value)
+      .toLocaleTimeString(undefined, {hour:'numeric', minute:'2-digit'});
+    const place = document.getElementById('place').value.trim();
+    document.getElementById('dateSummary').textContent =
+      'Our date: ' + formattedDate + ' at ' + formattedTime + (place ? ' • ' + place : '') + '. A big virtual hug is waiting for you! 💗';
+    showScreen(5);
+  });
+
+  document.getElementById('restart').addEventListener('click', () => {
+    yesScale = 1;
+    yesButton.style.fontSize = '';
+    yesButton.style.padding = '';
+    hint.textContent = 'Choose whichever answer feels right. 💕';
+    document.getElementById('dateForm').reset();
+    showScreen(1);
+  });
+</script>
+</body>
+</html>
